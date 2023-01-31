@@ -5,13 +5,12 @@
 // example test. To run these tests, uncomment this file along with the
 // example resource in lib/aws-cdk-ddb-lambda-playground-stack.ts
 test('SQS Queue Created', () => {
-//   const app = new cdk.App();
-//     // WHEN
-//   const stack = new AwsCdkDdbLambdaPlayground.AwsCdkDdbLambdaPlaygroundStack(app, 'MyTestStack');
-//     // THEN
-//   const template = Template.fromStack(stack);
-
-//   template.hasResourceProperties('AWS::SQS::Queue', {
-//     VisibilityTimeout: 300
-//   });
-});
+  //   const app = new cdk.App();
+  //     // WHEN
+  //   const stack = new AwsCdkDdbLambdaPlayground.AwsCdkDdbLambdaPlaygroundStack(app, 'MyTestStack');
+  //     // THEN
+  //   const template = Template.fromStack(stack);
+  //   template.hasResourceProperties('AWS::SQS::Queue', {
+  //     VisibilityTimeout: 300
+  //   });
+})

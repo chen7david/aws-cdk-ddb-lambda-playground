@@ -1,16 +1,37 @@
-import * as cdk from 'aws-cdk-lib';
-import { Construct } from 'constructs';
+import * as cdk from 'aws-cdk-lib'
+import { aws_dynamodb as dynamodb, aws_apigateway as apigw, aws_lambda as lambda } from 'aws-cdk-lib'
+import { Construct } from 'constructs'
+// import * as dynamodb from 'aws-cdk-lib/aws-dynamodb'
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 
 export class AwsCdkDdbLambdaPlaygroundStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
-    super(scope, id, props);
+    super(scope, id, props)
 
-    // The code that defines your stack goes here
+    const userTableSchema: dynamodb.TableProps = {
+      tableName: 'aws-cdk-lambda-playground-user-table',
+      partitionKey: {
+        name: 'email',
+        type: dynamodb.AttributeType.STRING
+      },
+    }
 
-    // example resource
-    // const queue = new sqs.Queue(this, 'AwsCdkDdbLambdaPlaygroundQueue', {
-    //   visibilityTimeout: cdk.Duration.seconds(300)
-    // });
+    const userTable = new dynamodb.Table(
+      this,
+      'aws-cdk-lambda-playground',
+      userTableSchema
+    )
+
+    const userLamnda =  new lambda.Function(this, 'aws-cdk-lambda-playground', {
+      functionName: 'aaws-cdk-lambda-playground-user',
+      code: new lambda.AssetCode('src/handler/'),
+      handler: 'get-all-users.handler',
+      runtime: lambda.Runtime.NODEJS_14_X,
+      environment: {
+        TABLE_NAME: userTable.tableName
+      }
+    })
+
+    userTable.grantWriteData(userLamnda)
   }
 }
